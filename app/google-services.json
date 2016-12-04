@@ -1,0 +1,81 @@
+{
+  "project_info": {
+    "project_number": "853852242207",
+    "firebase_url": "https://songtogo-f2eae.firebaseio.com",
+    "project_id": "songtogo-f2eae",
+    "storage_bucket": "songtogo-f2eae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853852242207:android:e7d9d46c0c34cf81",
+        "android_client_info": {
+          "package_name": "com.itproject.android.song2go"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853852242207-pf9rvip0c929q8aoii8uekr3itmnnghp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.itproject.android.song2go",
+            "certificate_hash": "F66910D798CF23E9828C05F65A8C87F9DD3D418B"
+          }
+        },
+        {
+          "client_id": "853852242207-fk5tgbs7bkh499fud3jib3fdkb8qdmq0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGPdZQu_B_TbCxQf3P9SLuv9TL0qciD-I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853852242207:android:a0c156925f880544",
+        "android_client_info": {
+          "package_name": "com.itproject.android.androidtvsample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853852242207-fk5tgbs7bkh499fud3jib3fdkb8qdmq0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGPdZQu_B_TbCxQf3P9SLuv9TL0qciD-I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

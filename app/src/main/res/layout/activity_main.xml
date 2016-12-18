@@ -7,20 +7,36 @@
     >
 
 
-    <!--<ListView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/listView"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_centerHorizontal="true" />-->
-
-    <VideoView
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:id="@+id/videoViewtest"
+    <Button
+        android:text="PAUSE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp" />
+        android:layout_marginTop="28dp"
+        android:id="@+id/btnplay" />
+
+    <Button
+        android:text="PREV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnplay"
+        android:layout_toLeftOf="@+id/btnplay"
+        android:layout_toStartOf="@+id/btnplay"
+        android:layout_marginRight="27dp"
+        android:layout_marginEnd="27dp"
+        android:id="@+id/btnprev" />
+
+    <Button
+        android:text="NEXT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnplay"
+        android:layout_toRightOf="@+id/btnplay"
+        android:layout_toEndOf="@+id/btnplay"
+        android:layout_marginLeft="27dp"
+        android:layout_marginStart="27dp"
+        android:id="@+id/btnnext" />
 
     <TextView
         android:text="*"
@@ -43,7 +59,9 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="12dp"
         android:layout_marginStart="12dp"
-        android:id="@+id/button2" />
+        android:id="@+id/button2"
+        android:layout_alignRight="@+id/btnprev"
+        android:layout_alignEnd="@+id/btnprev" />
 
     <TextView
         android:text="TextView"
@@ -56,4 +74,28 @@
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/button2"
         android:layout_toEndOf="@+id/button2" />
+
+    <VideoView
+        android:id="@+id/backgroundvideo"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/btnplay"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="200dp" />
+
+    <TextView
+
+        android:maxLines ="5"
+        android:scrollbars ="vertical"
+        android:textSize="20dp"
+        android:text="LYRICS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:id="@+id/txtlyrics"
+        android:layout_above="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textAlignment="center" />
 </RelativeLayout>

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView mlyrics;
     StringBuilder text;
     BufferedReader br;
-    String line;
+    String line,a="\\";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,9 +98,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             mlyrics.setText(text.toString().replace("�","").replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
                     .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
-                    .replace("/","").replace(">","").replace("<","").replace("@","").replace("&","")
+                    .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
                     .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                    .replace("!","").replace("(","").replace(")","").replace("#",""));
+                    .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n"));
         }
         else
         {
@@ -173,9 +173,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         mlyrics.setText(text.toString().replace("�","").replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
                                 .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
-                                .replace("/","").replace(">","").replace("<","").replace("@","").replace("&","")
+                                .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
                                 .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                                .replace("!","").replace("(","").replace(")","").replace("#",""));
+                                .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n"));
                     }
                     else
                     {
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
                                 .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
                                 .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                                .replace("!","").replace("(","").replace(")","").replace("#",""));
+                                .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n"));
                     }
                     else
                     {
@@ -308,9 +308,9 @@ timer.cancel();
                     }
                     mlyrics.setText(text.toString().replace("�","").replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
                             .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
-                            .replace("/","").replace(">","").replace("<","").replace("@","").replace("&","")
+                            .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
                             .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                            .replace("!","").replace("(","").replace(")","").replace("#",""));
+                            .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n"));
                 }
                 else
                 {
@@ -354,9 +354,9 @@ timer.cancel();
                     }
                     mlyrics.setText(text.toString().replace("�","").replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
                             .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
-                            .replace("/","").replace(">","").replace("<","").replace("@","").replace("&","")
+                            .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
                             .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                            .replace("!","").replace("(","").replace(")","").replace("#",""));
+                            .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n"));
                 }
                 else
                 {

@@ -4,7 +4,8 @@
     android:id="@+id/activity_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.itproject.android.androidtvsample.ListActivity">
+    tools:context="com.itproject.android.androidtvsample.ListActivity"
+    android:background="@drawable/androidtv_bg">
 
 
     <ListView
@@ -13,7 +14,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:id="@+id/lvsongs"
-        />
+        android:id="@+id/lvsongs" />
 
 </RelativeLayout>

@@ -25,6 +25,7 @@ public class AcceptReserveActivity extends AppCompatActivity {
     ArrayAdapter<String> arrayAdapter;
     ListView mlvAreserve;
     String ktvemail;
+    ProgressBar pgbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +39,12 @@ public class AcceptReserveActivity extends AppCompatActivity {
         acceptedreservationref=new Firebase("https://songtogo-f2eae.firebaseio.com/KTV-Bar/"+ktvemail+"/AcceptedReservation");
         arrayAdapter=new ArrayAdapter(this,R.layout.list_item,R.id.txtlistitem,mAReservation);
         mlvAreserve=(ListView) findViewById(R.id.lvareserve);
+        pgbar=(ProgressBar)findViewById(R.id.progressBar);
 
         acceptedreservationref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                pgbar.setVisibility(ProgressBar.GONE);
                // String dates=dataSnapshot.child("dates").getValue(String.class);
                 String numberofhours=dataSnapshot.child("numberofhours").getValue(String.class);
                 String playlistkey=dataSnapshot.child("playlistkey").getValue(String.class);

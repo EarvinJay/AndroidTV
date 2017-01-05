@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -26,6 +27,7 @@ public class DownloadSongsActivity extends AppCompatActivity {
     String mpkey,muname,mtime;
     ArrayAdapter<String> arrayAdapter;
     Button btndownloadsongs;
+    ProgressBar pgbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +42,14 @@ public class DownloadSongsActivity extends AppCompatActivity {
         downloadsongsref=new Firebase("https://songtogo-f2eae.firebaseio.com/users/"+muname+"/Playlist/"+mpkey+"/Songs");
         mlvdownloadsongs=(ListView) findViewById(R.id.lvdownloadsongs);
         btndownloadsongs=(Button) findViewById(R.id.mbtndownloadsong);
+        pgbar=(ProgressBar) findViewById(R.id.progressBar2);
         lvdownloadurl = new ListView(this);
 
         arrayAdapter=new ArrayAdapter(this,R.layout.list_item,R.id.txtlistitem,mDSongs);
         downloadsongsref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
+                pgbar.setVisibility(ProgressBar.GONE);
                 String sname=dataSnapshot.child("songname").getValue(String.class);
                 String durl=dataSnapshot.child("songurl").getValue(String.class);
                 mDSongs.add(sname);

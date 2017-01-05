@@ -8,9 +8,12 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     StringBuilder text;
     BufferedReader br;
     String line,a="\\";
+    Scroller mScroller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mlyrics=(TextView) findViewById(R.id.txtlyrics);
         mlyrics.setMovementMethod(new ScrollingMovementMethod());
+        mlyrics.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        mScroller=new Scroller(MainActivity.this,new LinearInterpolator());
+        mlyrics.setScroller(mScroller);
+        mScroller.startScroll(0,0,0,2000,280000);
         video=(VideoView) findViewById(R.id.backgroundvideo);
         mbtnplay=(Button) findViewById(R.id.btnplay);
         mbtnprev=(Button) findViewById(R.id.btnprev);
@@ -96,11 +104,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
 
-            mlyrics.setText(text.toString().replace("�","").replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
+            mlyrics.setText(text.toString().replace("�p�","").replace("�P�","").replace("�","")
+                    .replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
                     .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
                     .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
                     .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                    .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n"));
+                    .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n")
+                    .replace("$",""));
         }
         else
         {
@@ -139,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else if(mtxtcommand.getText().equals("PREVIOUS")){
                     mp.stop();
                     mp.release();
-
+                    mScroller.startScroll(0,0,0,2000,280000);
                     position=(position-1<0)?mySongs.size()-1: position-1;
                     if(position-1<0)
                     {
@@ -171,11 +181,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         }
 
-                        mlyrics.setText(text.toString().replace("�","").replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
+                        mlyrics.setText(text.toString().replace("�p�","").replace("�P�","").replace("�","")
+                                .replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
                                 .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
                                 .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
                                 .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                                .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n"));
+                                .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n")
+                                .replace("$",""));
                     }
                     else
                     {
@@ -188,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mp.stop();
                     mp.release();
 
-
+                    mScroller.startScroll(0,0,0,2000,280000);
                     position=(position+1)%mySongs.size();
                     uri= Uri.parse(mySongs.get(position).toString());
                     mp= MediaPlayer.create(getApplicationContext(),uri);
@@ -214,11 +226,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         }
 
-                        mlyrics.setText(text.toString().replace("�","").replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
+                        mlyrics.setText(text.toString().replace("�p�","").replace("�P�","").replace("�","")
+                                .replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
                                 .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
                                 .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
                                 .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                                .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n"));
+                                .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n")
+                                .replace("$",""));
                     }
                     else
                     {
@@ -281,7 +295,7 @@ timer.cancel();
             case R.id.btnnext:
                 mp.stop();
                 mp.release();
-
+                mScroller.startScroll(0,0,0,2000,280000);
                 position=(position+1)%mySongs.size();
                 uri= Uri.parse(mySongs.get(position).toString());
                 mp= MediaPlayer.create(getApplicationContext(),uri);
@@ -306,11 +320,13 @@ timer.cancel();
                     catch (IOException e) {
 
                     }
-                    mlyrics.setText(text.toString().replace("�","").replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
+                    mlyrics.setText(text.toString().replace("�p�","").replace("�P�","").replace("�","")
+                            .replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
                             .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
                             .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
                             .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                            .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n"));
+                            .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n")
+                            .replace("$",""));
                 }
                 else
                 {
@@ -322,7 +338,7 @@ timer.cancel();
             case R.id.btnprev:
                 mp.stop();
                 mp.release();
-
+                mScroller.startScroll(0,0,0,2000,280000);
                 position=(position-1<0)?mySongs.size()-1: position-1;
                 if(position-1<0)
                 {
@@ -352,11 +368,13 @@ timer.cancel();
                     catch (IOException e) {
 
                     }
-                    mlyrics.setText(text.toString().replace("�","").replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
+                    mlyrics.setText(text.toString().replace("�p�","").replace("�P�","").replace("�","")
+                            .replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
                             .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
                             .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
                             .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                            .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n"));
+                            .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n")
+                            .replace("$",""));
                 }
                 else
                 {

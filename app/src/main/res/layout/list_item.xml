@@ -6,11 +6,10 @@
     <TextView
         android:text="TextView"
         android:textSize="20dp"
-        android:padding="10dp"
+        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtlistitem"
-
         android:background="@drawable/myselector"
         android:textColor="@color/common_google_signin_btn_text_dark_default" />
 </LinearLayout>

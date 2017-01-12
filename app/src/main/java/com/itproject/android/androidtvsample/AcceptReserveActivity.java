@@ -24,7 +24,7 @@ public class AcceptReserveActivity extends AppCompatActivity {
     ArrayList<String> mTime= new  ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
     ListView mlvAreserve;
-    String ktvemail;
+    String ktvemail,roomname;
     ProgressBar pgbar;
 
     @Override
@@ -35,8 +35,10 @@ public class AcceptReserveActivity extends AppCompatActivity {
 
         Intent intent =getIntent();
         ktvemail=intent.getStringExtra("EMAIL").toString().replace("."," ");
+        roomname=intent.getStringExtra("ROOM#");
 
-        acceptedreservationref=new Firebase("https://songtogo-f2eae.firebaseio.com/KTV-Bar/"+ktvemail+"/AcceptedReservation");
+        acceptedreservationref=new Firebase("https://songtogo-f2eae.firebaseio.com/KTV-Bar/"+ktvemail+"/Room");
+
         arrayAdapter=new ArrayAdapter(this,R.layout.list_item,R.id.txtlistitem,mAReservation);
         mlvAreserve=(ListView) findViewById(R.id.lvareserve);
         pgbar=(ProgressBar)findViewById(R.id.progressBar);

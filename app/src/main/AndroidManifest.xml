@@ -22,7 +22,6 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".ListActivity" />
-        <activity android:name=".DownloadSongsActivity" />
         <activity android:name=".AcceptReserveActivity"></activity>
     </application>
 

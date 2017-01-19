@@ -1,15 +1,18 @@
 package com.itproject.android.androidtvsample;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -29,6 +32,9 @@ public class ListActivity extends AppCompatActivity {
     ListView mlvsongs;
     String[] items;
     File file;
+    int size,posi;
+    View item;
+
     int pos=0;
 
     public List<String> myList;
@@ -38,7 +44,7 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         mlvsongs=(ListView) findViewById(R.id.lvsongs);
-        rootref=new Firebase("https://songtogo-f2eae.firebaseio.com/NotificationRequest");
+        rootref=new Firebase("https://songtogo-f2eae.firebaseio.com/SelectControl");
 
 
         final ArrayList<File> mySongs = findSongs(Environment.getExternalStorageDirectory());
@@ -69,7 +75,15 @@ public class ListActivity extends AppCompatActivity {
         ArrayAdapter<String> adp=new ArrayAdapter<String>(getApplicationContext(),R.layout.list_item,R.id.txtlistitem,items);
         mlvsongs.setAdapter(adp);
 
-        mlvsongs.setItemChecked(0,true);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                View defaultitem = mlvsongs.getChildAt(pos);
+                ((TextView) defaultitem.findViewById(R.id.txtlistitem)).setTextColor(Color.RED);
+            }
+        }, 1000);
+
         Firebase ref=rootref.child("notification");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -77,14 +91,54 @@ public class ListActivity extends AppCompatActivity {
                 m=dataSnapshot.getValue(String.class);
 
 
-                if(m.equals("UP"))
+                if(m.equals("DOWN"))
+                {
+                    try {
+
+                        posi = posi + 1;
+                        item = mlvsongs.getChildAt(posi);
+                        ((TextView) item.findViewById(R.id.txtlistitem)).setTextColor(Color.RED);
+                    }
+
+                    catch (Exception e)
+                    {
+
+
+                        finish();
+                        overridePendingTransition( 0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition( 0, 0);
+
+                    }
+                }
+                else if(m.equals("UP"))
                 {
 
+                    try {
+
+                        item = mlvsongs.getChildAt(posi--);
+                        ((TextView) item.findViewById(R.id.txtlistitem)).setTextColor(Color.WHITE);
+                    }
+
+                    catch (Exception e)
+                    {
+
+
+                        finish();
+                        overridePendingTransition( 0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition( 0, 0);
+
+                    }
                 }
-                else if(m.equals("DOWN"))
+
+                else if(m.equals("OPEN"))
                 {
 
+                    String val =(String) mlvsongs.getItemAtPosition(posi);
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class).putExtra("pos",posi).putExtra("songlist", mySongs));
                 }
+
             }
 
             @Override

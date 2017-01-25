@@ -52,7 +52,7 @@ public class ListActivity extends AppCompatActivity {
 
         for(int i=0; i<mySongs.size();i++)
         {
-            items[i]=mySongs.get(i).getName().toString();
+            items[i]=mySongs.get(i).getName().toString().replace(".kar","");
         }
 
 

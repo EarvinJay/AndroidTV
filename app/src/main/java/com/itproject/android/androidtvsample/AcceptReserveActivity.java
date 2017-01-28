@@ -148,6 +148,8 @@ public class AcceptReserveActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Intent newActivity = new Intent(AcceptReserveActivity.this,ListActivity.class);
+                        newActivity.putExtra("UNAME",username);
+                        newActivity.putExtra("HOURS",numberofhours);
                         startActivity(newActivity);
                     }
                 }, 5000);

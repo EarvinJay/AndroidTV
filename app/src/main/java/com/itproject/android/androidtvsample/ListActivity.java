@@ -26,7 +26,7 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
-    String m;
+    String m,uname,nofhours;
     String rep;
     Firebase rootref;
     ListView mlvsongs;
@@ -42,6 +42,12 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        Intent intent = getIntent();
+        uname=intent.getStringExtra("UNAME");
+        nofhours=intent.getStringExtra("HOURS");
+
+        Toast.makeText(ListActivity.this,"WELCOME "+uname,Toast.LENGTH_SHORT).show();
 
         mlvsongs=(ListView) findViewById(R.id.lvsongs);
         rootref=new Firebase("https://songtogo-f2eae.firebaseio.com/SelectControl");

@@ -66,28 +66,15 @@
         android:layout_alignRight="@+id/btnprev"
         android:layout_alignEnd="@+id/btnprev" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_alignTop="@+id/button2"
-        android:id="@+id/txttimer"
-        android:layout_height="50dp"
-        android:layout_width="100dp"
-        android:gravity="center"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/button2"
-        android:layout_toEndOf="@+id/button2" />
-
 
     <TextView
 
-        android:maxLines ="15"
+        android:maxLines ="10"
         android:scrollbars ="vertical"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit ="marquee_forever"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:textSize="15dp"
         android:text="LYRICS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -98,5 +85,17 @@
         android:layout_marginTop="36dp"
         android:layout_below="@+id/btnplay"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textSize="35dp" />
+
+    <TextView
+        android:text="TextView"
+        android:id="@+id/txttimer"
+        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:gravity="center"
+        android:layout_above="@+id/txtcommand"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="20dp" />
 </RelativeLayout>

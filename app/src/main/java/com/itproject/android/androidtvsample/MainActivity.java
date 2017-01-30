@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     StringBuilder text;
     BufferedReader br;
     String line,a="\\";
+    String nofhours;
     Scroller mScroller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         Intent i=getIntent();
+        nofhours=i.getStringExtra("HOURS");
         Bundle b=i.getExtras();
         mySongs= (ArrayList) b.getParcelableArrayList("songlist");
         position= b.getInt("pos",0);
@@ -120,8 +122,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rootref=new Firebase("https://songtogo-f2eae.firebaseio.com/NotificationRequest");
         mtxtcommand=(TextView) findViewById(R.id.txtcommand);
         showtimer=(TextView) findViewById(R.id.txttimer);
-        timer=new CountDownT(10000,1000);
+        timer=new CountDownT(20000,1000);
         showtimer.setText("10");
+        timer.start();
 
 
         Firebase ref=rootref.child("notification");
@@ -402,7 +405,10 @@ showtimer.setText((l/1000)+"");
 
         public void onFinish()
         {
-showtimer.setText("END TIMER");
+            showtimer.setText("END TIMER");
+
+            Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
+            startActivity(intent);
         }
 
     }

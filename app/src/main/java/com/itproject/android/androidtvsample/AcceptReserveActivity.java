@@ -150,6 +150,7 @@ public class AcceptReserveActivity extends AppCompatActivity {
                         Intent newActivity = new Intent(AcceptReserveActivity.this,ListActivity.class);
                         newActivity.putExtra("UNAME",username);
                         newActivity.putExtra("HOURS",numberofhours);
+                        finish();
                         startActivity(newActivity);
                     }
                 }, 5000);

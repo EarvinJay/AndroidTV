@@ -142,7 +142,8 @@ public class ListActivity extends AppCompatActivity {
                 {
 
                     String val =(String) mlvsongs.getItemAtPosition(posi);
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class).putExtra("pos",posi).putExtra("songlist", mySongs));
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class).putExtra("pos",posi).putExtra("songlist", mySongs)
+                            .putExtra("HOURS", nofhours));
                 }
 
             }
@@ -161,7 +162,8 @@ public class ListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(),m,Toast.LENGTH_SHORT).show();
                 view.setSelected(true);
-                 startActivity(new Intent(getApplicationContext(),MainActivity.class).putExtra("pos",position).putExtra("songlist", mySongs));
+                 startActivity(new Intent(getApplicationContext(),MainActivity.class).putExtra("pos",position).putExtra("songlist", mySongs)
+                         .putExtra("HOURS", nofhours));
             }
         });
 

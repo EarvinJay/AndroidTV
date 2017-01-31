@@ -30,7 +30,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="11dp"
-        android:hint="ROOM NAME" />
+        android:hint="ROOM NUMBER" />
 
     <EditText
         android:layout_width="match_parent"

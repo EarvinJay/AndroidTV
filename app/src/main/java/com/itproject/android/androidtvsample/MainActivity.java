@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         uri= Uri.parse(mySongs.get(position).toString());
-        video.setVideoURI(Uri.parse("android.resource://com.itproject.android.androidtvsample/"+R.raw.videobg));
+        video.setVideoURI(Uri.parse("android.resource://com.itproject.android.androidtvsample/"+R.raw.karaokebg));
         mp=MediaPlayer.create(getApplicationContext(),uri);
         video.start();
         mp.start();
@@ -406,9 +406,11 @@ showtimer.setText((l/1000)+"");
         public void onFinish()
         {
             showtimer.setText("END TIMER");
-
+            mp.stop();
             Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
+            finish();
             startActivity(intent);
+
         }
 
     }

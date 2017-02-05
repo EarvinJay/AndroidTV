@@ -92,7 +92,7 @@ public class AcceptReserveActivity extends AppCompatActivity {
     public void retrieve()
     {
         arrayAdapter=new ArrayAdapter(this,R.layout.list_item,R.id.txtlistitem,mSongs);
-        userRef=new Firebase("https://songtogo-f2eae.firebaseio.com/users/"+username+"/Playlist/"+playlistkey+"/Songs");
+        userRef=new Firebase("https://songtogo-f2eae.firebaseio.com/users/"+username+"/Playlist/"+ktvemail+"/"+playlistkey+"/Songs");
 
         userRef.addChildEventListener(new ChildEventListener() {
             @Override

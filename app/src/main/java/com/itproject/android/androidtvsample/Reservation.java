@@ -6,6 +6,7 @@ package com.itproject.android.androidtvsample;
 
 public class Reservation {
 
+    private String capacity;
    private String dates;
     private String numberofhours;
     private String playlistkey;
@@ -16,6 +17,14 @@ public class Reservation {
     public Reservation()
     {
 
+    }
+
+    public String getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 
     public String getUsername() {

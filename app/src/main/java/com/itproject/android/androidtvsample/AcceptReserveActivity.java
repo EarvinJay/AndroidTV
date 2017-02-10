@@ -210,7 +210,7 @@ public class AcceptReserveActivity extends AppCompatActivity {
 
                     System.out.println("Data::" + f_url[i]);
                     // Output stream to write file
-                    OutputStream output = new FileOutputStream(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename.replace("admin%2F","")));
+                    OutputStream output = new FileOutputStream(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename.replace("admin%2F","").replace("%","")));
 
                     byte data[] = new byte[1024];
 

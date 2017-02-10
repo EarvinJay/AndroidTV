@@ -137,10 +137,7 @@ public class AcceptReserveActivity extends AppCompatActivity {
 
                 for(int i=0;i<mDUrl.size();i++)
                 {
-
                     new DownloadFileFromUrl().execute(mDUrl.get(i).toString());
-
-
                 }
 
                 Handler handler = new Handler();
@@ -150,7 +147,7 @@ public class AcceptReserveActivity extends AppCompatActivity {
                         Intent newActivity = new Intent(AcceptReserveActivity.this,ListActivity.class);
                         newActivity.putExtra("UNAME",username);
                         newActivity.putExtra("HOURS",numberofhours);
-                        finish();
+                       // finish();
                         startActivity(newActivity);
                     }
                 }, 5000);

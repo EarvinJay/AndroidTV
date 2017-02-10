@@ -123,8 +123,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mtxtcommand=(TextView) findViewById(R.id.txtcommand);
         showtimer=(TextView) findViewById(R.id.txttimer);
         timer=new CountDownT(20000,1000);
-        showtimer.setText("10");
-        timer.start();
+       // showtimer.setText("10");
+        //timer.start();
 
 
         Firebase ref=rootref.child("notification");
@@ -408,7 +408,7 @@ showtimer.setText((l/1000)+"");
             showtimer.setText("END TIMER");
             mp.stop();
             Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
-            finish();
+           // finish();
             startActivity(intent);
 
         }

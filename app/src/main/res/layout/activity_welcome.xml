@@ -22,6 +22,7 @@
         android:layout_height="50dp"
         android:inputType="textEmailAddress"
         android:ems="10"
+        android:visibility="invisible"
         android:id="@+id/txtroomname"
         android:background="@android:drawable/button_onoff_indicator_off"
         android:textSize="24sp"

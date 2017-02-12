@@ -150,7 +150,7 @@ public class AcceptReserveActivity extends AppCompatActivity {
                        // finish();
                         startActivity(newActivity);
                     }
-                }, 5000);
+                }, 10000);
 
 
             }

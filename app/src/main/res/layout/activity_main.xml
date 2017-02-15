@@ -97,5 +97,6 @@
         android:layout_above="@+id/txtcommand"
         android:layout_centerHorizontal="true"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:visibility="invisible" />
 </RelativeLayout>

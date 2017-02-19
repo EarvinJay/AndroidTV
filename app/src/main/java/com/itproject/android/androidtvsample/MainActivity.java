@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     StringBuilder text;
     BufferedReader br;
     String line,a="\\";
-    String nofhours;
+    String nofhours,uname;
     Scroller mScroller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent i=getIntent();
         nofhours=i.getStringExtra("HOURS");
+        uname=i.getStringExtra("UNAME");
         Bundle b=i.getExtras();
         mySongs= (ArrayList) b.getParcelableArrayList("songlist");
         position= b.getInt("pos",0);
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(getApplicationContext(),"dont exist",Toast.LENGTH_SHORT).show();
         }
 
-        rootref=new Firebase("https://songtogo-f2eae.firebaseio.com/NotificationRequest");
+        rootref=new Firebase("https://songtogo-f2eae.firebaseio.com/users/"+uname+"/NotificationRequest");
         mtxtcommand=(TextView) findViewById(R.id.txtcommand);
         showtimer=(TextView) findViewById(R.id.txttimer);
         timer=new CountDownT(20000,1000);
@@ -147,6 +148,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else if(mtxtcommand.getText().equals("STOP")){
                     mp.stop();
                     video.pause();
+                }
+
+                else if(mtxtcommand.getText().equals("Out"))
+                {
+
+                    finish();
+                    startActivity(new Intent(getApplicationContext(),WelcomeActivity.class));
                 }
 
                 else if(mtxtcommand.getText().equals("PREVIOUS")){

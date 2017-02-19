@@ -19,6 +19,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class WelcomeActivity extends AppCompatActivity {
     ListView logroom;
@@ -85,7 +86,12 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 String rname = dataSnapshot.child("room").getValue(String.class);
+
                 mFinalRoom.add(rname);
+                HashSet hs = new HashSet();
+                hs.addAll(mFinalRoom);
+                mFinalRoom.clear();
+                mFinalRoom.addAll(hs);
                 RarrayAdapterp.notifyDataSetChanged();
             }
 

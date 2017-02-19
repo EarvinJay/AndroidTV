@@ -50,7 +50,7 @@ public class ListActivity extends AppCompatActivity {
         Toast.makeText(ListActivity.this,"WELCOME "+uname,Toast.LENGTH_SHORT).show();
 
         mlvsongs=(ListView) findViewById(R.id.lvsongs);
-        rootref=new Firebase("https://songtogo-f2eae.firebaseio.com/SelectControl");
+        rootref=new Firebase("https://songtogo-f2eae.firebaseio.com/users/"+uname+"/SelectControl");
 
 
         final ArrayList<File> mySongs = findSongs(Environment.getExternalStorageDirectory());
@@ -143,7 +143,14 @@ public class ListActivity extends AppCompatActivity {
 
                     String val =(String) mlvsongs.getItemAtPosition(posi);
                     startActivity(new Intent(getApplicationContext(),MainActivity.class).putExtra("pos",posi).putExtra("songlist", mySongs)
-                            .putExtra("HOURS", nofhours));
+                            .putExtra("HOURS", nofhours).putExtra("UNAME",uname));
+                }
+
+                else if(m.equals("Out"))
+                {
+
+                    finish();
+                    startActivity(new Intent(getApplicationContext(),WelcomeActivity.class));
                 }
 
             }

@@ -28,6 +28,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView mlyrics;
     StringBuilder text;
     BufferedReader br;
-    String line,a="\\";
+    String line,a="\\",tex;
     String nofhours,uname;
     Scroller mScroller;
     @Override
@@ -106,14 +107,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             catch (IOException e) {
 
             }
+            tex=text.toString().substring(text.indexOf("\\")+1);
+            tex=tex.replace("MTrk","˜");
+            StringTokenizer tokens = new StringTokenizer(tex, "˜");
+            tex= tokens.nextToken().toString();
+            tex=tex.toString().replace("/","\n").replace("\\","\n\n").replace("�p�","").replace("�P�","")
+        .replace("�`�","").replace("�X�","").replace("x�","").replace("�@�","").replace("�h�","")
+        .replace("�$�","").replace("�J�","").replace("�4�","").replace("�0�","").replace("�(�","").replace("�|�","")
+        .replace("�l�","").replace("�t�","").replace("�D�","").replace("�L�","").replace("�d�","").replace("�j�","")
+        .replace("�,�","").replace("�&�","").replace("�!�","").replace("�*�","").replace("�K�","").replace("�n�","")
+        .replace("�:�","").replace("�A�","").replace("�%�","").replace("�3�","").replace("�a�","").replace("�~�","")
+        .replace("Z�","").replace("<�","").replace("`�","").replace("|�","").replace("T�","").replace("H�","").replace("X�","")
+        .replace("8�","").replace("9�","").replace("=�","").replace("Y�","").replace(";�","").replace("{�","").replace("v�","")
+        .replace("z�","").replace("w�","").replace("y�","").replace("[�","").replace("]�","").replace("[�","").replace("^�","")
+        .replace("c�","").replace("1�","").replace("_�","").replace("0�","").replace("b�","").replace("2�","")
+        .replace("�","")
+        .replace(" ","");
 
-            mlyrics.setText(text.toString().replace("�p�","").replace("�P�","").replace("�","")
-                    .replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
-                    .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
-                    .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
-                    .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                    .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n")
-                    .replace("$",""));
+
+
+            mlyrics.setText(tex);
         }
         else
         {
@@ -192,13 +205,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         }
 
-                        mlyrics.setText(text.toString().replace("�p�","").replace("�P�","").replace("�","")
-                                .replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
-                                .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
-                                .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
-                                .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                                .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n")
-                                .replace("$",""));
+                        tex=text.toString().substring(text.indexOf("\\")+1);
+                        tex=tex.replace("MTrk","˜");
+                        StringTokenizer tokens = new StringTokenizer(tex, "˜");
+                        tex= tokens.nextToken().toString();
+                        tex=tex.toString().replace("/","\n").replace("\\","\n\n").replace("�p�","").replace("�P�","")
+                                .replace("�`�","").replace("�X�","").replace("x�","").replace("�@�","").replace("�h�","")
+                                .replace("�$�","").replace("�J�","").replace("�4�","").replace("�0�","").replace("�(�","").replace("�|�","")
+                                .replace("�l�","").replace("�t�","").replace("�D�","").replace("�L�","").replace("�d�","").replace("�j�","")
+                                .replace("�,�","").replace("�&�","").replace("�!�","").replace("�*�","").replace("�K�","").replace("�n�","")
+                                .replace("�:�","").replace("�A�","").replace("�%�","").replace("�3�","").replace("�a�","").replace("�~�","")
+                                .replace("Z�","").replace("<�","").replace("`�","").replace("|�","").replace("T�","").replace("H�","").replace("X�","")
+                                .replace("8�","").replace("9�","").replace("=�","").replace("Y�","").replace(";�","").replace("{�","").replace("v�","")
+                                .replace("z�","").replace("w�","").replace("y�","").replace("[�","").replace("]�","").replace("[�","").replace("^�","")
+                                .replace("c�","").replace("1�","").replace("_�","").replace("0�","").replace("b�","").replace("2�","")
+                                .replace("�","")
+                                .replace(" ","");
+
+
+
+                        mlyrics.setText(tex);
                     }
                     else
                     {
@@ -237,13 +263,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         }
 
-                        mlyrics.setText(text.toString().replace("�p�","").replace("�P�","").replace("�","")
-                                .replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
-                                .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
-                                .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
-                                .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                                .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n")
-                                .replace("$",""));
+                        tex=text.toString().substring(text.indexOf("\\")+1);
+                        tex=tex.replace("MTrk","˜");
+                        StringTokenizer tokens = new StringTokenizer(tex, "˜");
+                        tex= tokens.nextToken().toString();
+                        tex=tex.toString().replace("/","\n").replace("\\","\n\n").replace("�p�","").replace("�P�","")
+                                .replace("�`�","").replace("�X�","").replace("x�","").replace("�@�","").replace("�h�","")
+                                .replace("�$�","").replace("�J�","").replace("�4�","").replace("�0�","").replace("�(�","").replace("�|�","")
+                                .replace("�l�","").replace("�t�","").replace("�D�","").replace("�L�","").replace("�d�","").replace("�j�","")
+                                .replace("�,�","").replace("�&�","").replace("�!�","").replace("�*�","").replace("�K�","").replace("�n�","")
+                                .replace("�:�","").replace("�A�","").replace("�%�","").replace("�3�","").replace("�a�","").replace("�~�","")
+                                .replace("Z�","").replace("<�","").replace("`�","").replace("|�","").replace("T�","").replace("H�","").replace("X�","")
+                                .replace("8�","").replace("9�","").replace("=�","").replace("Y�","").replace(";�","").replace("{�","").replace("v�","")
+                                .replace("z�","").replace("w�","").replace("y�","").replace("[�","").replace("]�","").replace("[�","").replace("^�","")
+                                .replace("c�","").replace("1�","").replace("_�","").replace("0�","").replace("b�","").replace("2�","")
+                                .replace("�","")
+                                .replace(" ","");
+
+
+
+                        mlyrics.setText(tex);
                     }
                     else
                     {
@@ -331,13 +370,26 @@ timer.cancel();
                     catch (IOException e) {
 
                     }
-                    mlyrics.setText(text.toString().replace("�p�","").replace("�P�","").replace("�","")
-                            .replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
-                            .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
-                            .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
-                            .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                            .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n")
-                            .replace("$",""));
+                    tex=text.toString().substring(text.indexOf("\\")+1);
+                    tex=tex.replace("MTrk","˜");
+                    StringTokenizer tokens = new StringTokenizer(tex, "˜");
+                    tex= tokens.nextToken().toString();
+                    tex=tex.toString().replace("/","\n").replace("\\","\n\n").replace("�p�","").replace("�P�","")
+                            .replace("�`�","").replace("�X�","").replace("x�","").replace("�@�","").replace("�h�","")
+                            .replace("�$�","").replace("�J�","").replace("�4�","").replace("�0�","").replace("�(�","").replace("�|�","")
+                            .replace("�l�","").replace("�t�","").replace("�D�","").replace("�L�","").replace("�d�","").replace("�j�","")
+                            .replace("�,�","").replace("�&�","").replace("�!�","").replace("�*�","").replace("�K�","").replace("�n�","")
+                            .replace("�:�","").replace("�A�","").replace("�%�","").replace("�3�","").replace("�a�","").replace("�~�","")
+                            .replace("Z�","").replace("<�","").replace("`�","").replace("|�","").replace("T�","").replace("H�","").replace("X�","")
+                            .replace("8�","").replace("9�","").replace("=�","").replace("Y�","").replace(";�","").replace("{�","").replace("v�","")
+                            .replace("z�","").replace("w�","").replace("y�","").replace("[�","").replace("]�","").replace("[�","").replace("^�","")
+                            .replace("c�","").replace("1�","").replace("_�","").replace("0�","").replace("b�","").replace("2�","")
+                            .replace("�","")
+                            .replace(" ","");
+
+
+
+                    mlyrics.setText(tex);
                 }
                 else
                 {
@@ -379,13 +431,26 @@ timer.cancel();
                     catch (IOException e) {
 
                     }
-                    mlyrics.setText(text.toString().replace("�p�","").replace("�P�","").replace("�","")
-                            .replace("1","").replace("2","").replace("3","").replace("4","").replace("5","")
-                            .replace("6","").replace("7","").replace("8","").replace("9","").replace("0","")
-                            .replace("/","\n").replace(">","").replace("<","").replace("@","").replace("&","")
-                            .replace("+","").replace("-","").replace("*","").replace("=","").replace("^","")
-                            .replace("!","").replace("(","").replace(")","").replace("#","").replace(a,"\n\n")
-                            .replace("$",""));
+                    tex=text.toString().substring(text.indexOf("\\")+1);
+                    tex=tex.replace("MTrk","˜");
+                    StringTokenizer tokens = new StringTokenizer(tex, "˜");
+                    tex= tokens.nextToken().toString();
+                    tex=tex.toString().replace("/","\n").replace("\\","\n\n").replace("�p�","").replace("�P�","")
+                            .replace("�`�","").replace("�X�","").replace("x�","").replace("�@�","").replace("�h�","")
+                            .replace("�$�","").replace("�J�","").replace("�4�","").replace("�0�","").replace("�(�","").replace("�|�","")
+                            .replace("�l�","").replace("�t�","").replace("�D�","").replace("�L�","").replace("�d�","").replace("�j�","")
+                            .replace("�,�","").replace("�&�","").replace("�!�","").replace("�*�","").replace("�K�","").replace("�n�","")
+                            .replace("�:�","").replace("�A�","").replace("�%�","").replace("�3�","").replace("�a�","").replace("�~�","")
+                            .replace("Z�","").replace("<�","").replace("`�","").replace("|�","").replace("T�","").replace("H�","").replace("X�","")
+                            .replace("8�","").replace("9�","").replace("=�","").replace("Y�","").replace(";�","").replace("{�","").replace("v�","")
+                            .replace("z�","").replace("w�","").replace("y�","").replace("[�","").replace("]�","").replace("[�","").replace("^�","")
+                            .replace("c�","").replace("1�","").replace("_�","").replace("0�","").replace("b�","").replace("2�","")
+                            .replace("�","")
+                            .replace(" ","");
+
+
+
+                    mlyrics.setText(tex);
                 }
                 else
                 {

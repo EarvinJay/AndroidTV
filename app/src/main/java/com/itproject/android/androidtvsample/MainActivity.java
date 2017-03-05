@@ -166,8 +166,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else if(mtxtcommand.getText().equals("Out"))
                 {
 
-                    finish();
-                    startActivity(new Intent(getApplicationContext(),WelcomeActivity.class));
+
+//                    startActivity(new Intent(getApplicationContext(),WelcomeActivity.class));
+                    Intent i = getBaseContext().getPackageManager()
+                            .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
                 }
 
                 else if(mtxtcommand.getText().equals("PREVIOUS")){

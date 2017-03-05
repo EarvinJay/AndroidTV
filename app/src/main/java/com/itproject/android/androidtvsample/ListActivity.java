@@ -149,8 +149,12 @@ public class ListActivity extends AppCompatActivity {
                 else if(m.equals("Out"))
                 {
 
-                    finish();
-                    startActivity(new Intent(getApplicationContext(),WelcomeActivity.class));
+
+//                    startActivity(new Intent(getApplicationContext(),WelcomeActivity.class));
+                    Intent i = getBaseContext().getPackageManager()
+                            .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
                 }
 
             }

@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.CountDownTimer;
-import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.Scroller;
 import android.widget.TextView;
@@ -21,124 +18,124 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.itproject.android.androidtvsample.lyriker.LyricsFileExtractor;
+import com.itproject.android.androidtvsample.lyriker.ParaMuKanta;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     VideoView video;
-    Uri uri;
-    int position;
+    Uri uri, txturi;
+    Runnable play;
+    Handler handlerplay = new Handler();
+    int position, duration, totaldelay;
     static MediaPlayer mp;
     ArrayList<File> mySongs;
-    Button mbtnplay,mbtnprev,mbtnnext;
+    Button mbtnplay, mbtnprev, mbtnnext;
     CountDownT timer;
     Firebase rootref;
-    TextView mtxtcommand,showtimer;
+    TextView mtxtcommand, showtimer;
     File file;
     TextView mlyrics;
     StringBuilder text;
     BufferedReader br;
-    String line,a="\\",tex;
-    String nofhours,uname;
+    String line, a = "\\", tex;
+    String nofhours, uname;
+    String[] phraseplay;
+    String[] syllableplay;
     Scroller mScroller;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        Intent i=getIntent();
-        nofhours=i.getStringExtra("HOURS");
-        uname=i.getStringExtra("UNAME");
-        Bundle b=i.getExtras();
-        mySongs= (ArrayList) b.getParcelableArrayList("songlist");
-        position= b.getInt("pos",0);
+        Intent i = getIntent();
+        nofhours = i.getStringExtra("HOURS");
+        uname = i.getStringExtra("UNAME");
+        Bundle b = i.getExtras();
+        mySongs = (ArrayList) b.getParcelableArrayList("songlist");
+        position = b.getInt("pos", 0);
 
-        mlyrics=(TextView) findViewById(R.id.txtlyrics);
-        mlyrics.setMovementMethod(new ScrollingMovementMethod());
-        mlyrics.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        mScroller=new Scroller(MainActivity.this,new LinearInterpolator());
-        mlyrics.setScroller(mScroller);
-        mScroller.startScroll(0,0,0,2000,280000);
-        video=(VideoView) findViewById(R.id.backgroundvideo);
-        mbtnplay=(Button) findViewById(R.id.btnplay);
-        mbtnprev=(Button) findViewById(R.id.btnprev);
-        mbtnnext=(Button) findViewById(R.id.btnnext);
+        mlyrics = (TextView) findViewById(R.id.txtlyrics);
+//        mlyrics.setSelected(true);
+//        mlyrics.setMovementMethod(new ScrollingMovementMethod());
+//        mlyrics.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+//        mScroller=new Scroller(MainActivity.this,new LinearInterpolator());
+//        mlyrics.setScroller(mScroller);
+//        mScroller.startScroll(0,0,0,2000,280000);
+        video = (VideoView) findViewById(R.id.backgroundvideo);
+        mbtnplay = (Button) findViewById(R.id.btnplay);
+        mbtnprev = (Button) findViewById(R.id.btnprev);
+        mbtnnext = (Button) findViewById(R.id.btnnext);
 
         mbtnplay.setOnClickListener(this);
         mbtnprev.setOnClickListener(this);
         mbtnnext.setOnClickListener(this);
 
-        if(mp!=null)
-        {
+        if (mp != null) {
             mp.stop();
             mp.release();
 
         }
 
-        uri= Uri.parse(mySongs.get(position).toString());
-        video.setVideoURI(Uri.parse("android.resource://com.itproject.android.androidtvsample/"+R.raw.karaokebg));
-        mp=MediaPlayer.create(getApplicationContext(),uri);
+        uri = Uri.parse(mySongs.get(position).toString());
+        txturi = Uri.parse(mySongs.get(position).toString().replace(".kar", ".txt"));
+        video.setVideoURI(Uri.parse("android.resource://com.itproject.android.androidtvsample/" + R.raw.karaokebg));
+        mp = MediaPlayer.create(getApplicationContext(), uri);
         video.start();
+        //duration=mp.getDuration();
+        //Toast.makeText(MainActivity.this,mp.getDuration()+"",Toast.LENGTH_SHORT).show();
         mp.start();
 
-        file = new File(""+uri);
-        if(file.exists())
-        {
+        final ParaMuKanta pmk = LyricsFileExtractor.readTextFile(txturi + "");
 
-             text = new StringBuilder();
+        handlerplay.post( play=new Runnable()
+            {
 
-            try {
-              br = new BufferedReader(new FileReader(file));
+            SimpleDateFormat sdf = new SimpleDateFormat("H:mm:ss.SSS");
+            int x = 0;
+            int currentLyric = 0;
+                int mins=0;
 
-
-                while ((line = br.readLine()) != null) {
-                    text.append(line);
-                    text.append('\n');
+                public void run() {
+                    try {
+                    mlyrics.setText(pmk.getLyrics().get(currentLyric).replace("/","").replace("\\",""));
+                        x++;
+                            if (x == sdf.parse(pmk.getTiming().get(currentLyric)).getSeconds()) {
+                                currentLyric++;
+                            }
+                            else if (x == 60) {
+                                x=0;
+                                mins++;
+                            }
+                       handlerplay.postDelayed(play, 1000);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    catch (IndexOutOfBoundsException e) {
+                     finish();
+                    }
                 }
-            }
-            catch (IOException e) {
-
-            }
-            tex=text.toString().substring(text.indexOf("\\")+1);
-            tex=tex.replace("MTrk","˜");
-            StringTokenizer tokens = new StringTokenizer(tex, "˜");
-            tex= tokens.nextToken().toString();
-            tex=tex.toString().replace("/","\n").replace("\\","\n\n").replace("�p�","").replace("�P�","")
-        .replace("�`�","").replace("�X�","").replace("x�","").replace("�@�","").replace("�h�","")
-        .replace("�$�","").replace("�J�","").replace("�4�","").replace("�0�","").replace("�(�","").replace("�|�","")
-        .replace("�l�","").replace("�t�","").replace("�D�","").replace("�L�","").replace("�d�","").replace("�j�","")
-        .replace("�,�","").replace("�&�","").replace("�!�","").replace("�*�","").replace("�K�","").replace("�n�","")
-        .replace("�:�","").replace("�A�","").replace("�%�","").replace("�3�","").replace("�a�","").replace("�~�","")
-        .replace("Z�","").replace("<�","").replace("`�","").replace("|�","").replace("T�","").replace("H�","").replace("X�","")
-        .replace("8�","").replace("9�","").replace("=�","").replace("Y�","").replace(";�","").replace("{�","").replace("v�","")
-        .replace("z�","").replace("w�","").replace("y�","").replace("[�","").replace("]�","").replace("[�","").replace("^�","")
-        .replace("c�","").replace("1�","").replace("_�","").replace("0�","").replace("b�","").replace("2�","")
-        .replace("�","")
-        .replace(" ","");
+        });
 
 
 
-            mlyrics.setText(tex);
-        }
-        else
-        {
-            Toast.makeText(getApplicationContext(),"dont exist",Toast.LENGTH_SHORT).show();
-        }
 
         rootref=new Firebase("https://songtogo-f2eae.firebaseio.com/users/"+uname+"/NotificationRequest");
         mtxtcommand=(TextView) findViewById(R.id.txtcommand);
         showtimer=(TextView) findViewById(R.id.txttimer);
         timer=new CountDownT(20000,1000);
-       // showtimer.setText("10");
-        //timer.start();
+
 
 
         Firebase ref=rootref.child("notification");
@@ -178,7 +175,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else if(mtxtcommand.getText().equals("PREVIOUS")){
                     mp.stop();
                     mp.release();
-                    mScroller.startScroll(0,0,0,2000,280000);
+                    video.stopPlayback();
+                    video.suspend();
+                    handlerplay.removeCallbacks(play);
+                   // mScroller.startScroll(0,0,0,2000,280000);
                     position=(position-1<0)?mySongs.size()-1: position-1;
                     if(position-1<0)
                     {
@@ -187,118 +187,101 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     else{
                         position=position-1;}
                     uri= Uri.parse(mySongs.get(position).toString());
+                    txturi = Uri.parse(mySongs.get(position).toString().replace(".kar", ".txt"));
                     mp= MediaPlayer.create(getApplicationContext(),uri);
                     mp.start();
                     video.start();
 
-                    file = new File(""+uri);
-                    if(file.exists())
+                    final ParaMuKanta pmk = LyricsFileExtractor.readTextFile(txturi + "");
+
+                    handlerplay.post( play=new Runnable()
                     {
 
-                        text = new StringBuilder();
+                        SimpleDateFormat sdf = new SimpleDateFormat("H:mm:ss.SSS");
+                        int x = 0;
+                        int currentLyric = 0;
+                        int mins=0;
 
-                        try {
-                         br= new BufferedReader(new FileReader(file));
-
-
-                            while ((line = br.readLine()) != null) {
-                                text.append(line);
-                                text.append('\n');
+                        public void run() {
+                            try {
+                                mlyrics.setText(pmk.getLyrics().get(currentLyric).replace("/","").replace("\\",""));
+                                x++;
+                                if (x == sdf.parse(pmk.getTiming().get(currentLyric)).getSeconds()) {
+                                    currentLyric++;
+                                }
+                                else if (x == 60) {
+                                    x=0;
+                                    mins++;
+                                }
+                                handlerplay.postDelayed(play, 1000);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            catch (IndexOutOfBoundsException e) {
+                                finish();
                             }
                         }
-                        catch (IOException e) {
+                    });
 
-                        }
-
-                        tex=text.toString().substring(text.indexOf("\\")+1);
-                        tex=tex.replace("MTrk","˜");
-                        StringTokenizer tokens = new StringTokenizer(tex, "˜");
-                        tex= tokens.nextToken().toString();
-                        tex=tex.toString().replace("/","\n").replace("\\","\n\n").replace("�p�","").replace("�P�","")
-                                .replace("�`�","").replace("�X�","").replace("x�","").replace("�@�","").replace("�h�","")
-                                .replace("�$�","").replace("�J�","").replace("�4�","").replace("�0�","").replace("�(�","").replace("�|�","")
-                                .replace("�l�","").replace("�t�","").replace("�D�","").replace("�L�","").replace("�d�","").replace("�j�","")
-                                .replace("�,�","").replace("�&�","").replace("�!�","").replace("�*�","").replace("�K�","").replace("�n�","")
-                                .replace("�:�","").replace("�A�","").replace("�%�","").replace("�3�","").replace("�a�","").replace("�~�","")
-                                .replace("Z�","").replace("<�","").replace("`�","").replace("|�","").replace("T�","").replace("H�","").replace("X�","")
-                                .replace("8�","").replace("9�","").replace("=�","").replace("Y�","").replace(";�","").replace("{�","").replace("v�","")
-                                .replace("z�","").replace("w�","").replace("y�","").replace("[�","").replace("]�","").replace("[�","").replace("^�","")
-                                .replace("c�","").replace("1�","").replace("_�","").replace("0�","").replace("b�","").replace("2�","")
-                                .replace("�","")
-                                .replace(" ","");
-
-
-
-                        mlyrics.setText(tex);
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(),"dont exist",Toast.LENGTH_SHORT).show();
-                    }
 
                 }
 
                 else if(mtxtcommand.getText().equals("NEXT")){
                     mp.stop();
                     mp.release();
-
-                    mScroller.startScroll(0,0,0,2000,280000);
+                    video.suspend();
+                    video.stopPlayback();
+                    handlerplay.removeCallbacks(play);
+                   // mScroller.startScroll(0,0,0,2000,280000);
                     position=(position+1)%mySongs.size();
                     uri= Uri.parse(mySongs.get(position).toString());
+                    txturi = Uri.parse(mySongs.get(position).toString().replace(".kar", ".txt"));
                     mp= MediaPlayer.create(getApplicationContext(),uri);
                     mp.start();
                     video.start();
 
-                    file = new File(""+uri);
-                    if(file.exists())
+                    final ParaMuKanta pmk = LyricsFileExtractor.readTextFile(txturi + "");
+
+                    handlerplay.post( play=new Runnable()
                     {
 
-                         text = new StringBuilder();
+                        SimpleDateFormat sdf = new SimpleDateFormat("H:mm:ss.SSS");
+                        int x = 0;
+                        int currentLyric = 0;
+                        int mins=0;
 
-                        try {
-                          br = new BufferedReader(new FileReader(file));
-
-
-                            while ((line = br.readLine()) != null) {
-                                text.append(line);
-                                text.append('\n');
+                        public void run() {
+                            try {
+                                mlyrics.setText(pmk.getLyrics().get(currentLyric).replace("/","").replace("\\",""));
+                                x++;
+                                if (x == sdf.parse(pmk.getTiming().get(currentLyric)).getSeconds()) {
+                                    currentLyric++;
+                                }
+                                else if (x == 60) {
+                                    x=0;
+                                    mins++;
+                                }
+                                handlerplay.postDelayed(play, 1000);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            catch (IndexOutOfBoundsException e) {
+                                finish();
                             }
                         }
-                        catch (IOException e) {
-
-                        }
-
-                        tex=text.toString().substring(text.indexOf("\\")+1);
-                        tex=tex.replace("MTrk","˜");
-                        StringTokenizer tokens = new StringTokenizer(tex, "˜");
-                        tex= tokens.nextToken().toString();
-                        tex=tex.toString().replace("/","\n").replace("\\","\n\n").replace("�p�","").replace("�P�","")
-                                .replace("�`�","").replace("�X�","").replace("x�","").replace("�@�","").replace("�h�","")
-                                .replace("�$�","").replace("�J�","").replace("�4�","").replace("�0�","").replace("�(�","").replace("�|�","")
-                                .replace("�l�","").replace("�t�","").replace("�D�","").replace("�L�","").replace("�d�","").replace("�j�","")
-                                .replace("�,�","").replace("�&�","").replace("�!�","").replace("�*�","").replace("�K�","").replace("�n�","")
-                                .replace("�:�","").replace("�A�","").replace("�%�","").replace("�3�","").replace("�a�","").replace("�~�","")
-                                .replace("Z�","").replace("<�","").replace("`�","").replace("|�","").replace("T�","").replace("H�","").replace("X�","")
-                                .replace("8�","").replace("9�","").replace("=�","").replace("Y�","").replace(";�","").replace("{�","").replace("v�","")
-                                .replace("z�","").replace("w�","").replace("y�","").replace("[�","").replace("]�","").replace("[�","").replace("^�","")
-                                .replace("c�","").replace("1�","").replace("_�","").replace("0�","").replace("b�","").replace("2�","")
-                                .replace("�","")
-                                .replace(" ","");
+                    });
 
 
-
-                        mlyrics.setText(tex);
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(),"dont exist",Toast.LENGTH_SHORT).show();
-                    }
 
                 }
 
 
                 else if(mtxtcommand.getText().equals("BACK")){
-                    startActivity(new Intent(getApplicationContext(),ListActivity.class));
+                    Intent i=new Intent(getApplicationContext(),ListActivity.class);
+                    i.putExtra("UNAME",uname);
+                    i.putExtra("HOURS",nofhours);
+                    startActivity(i);
+                    finish();
                 }
 
 
@@ -350,7 +333,7 @@ timer.cancel();
             case R.id.btnnext:
                 mp.stop();
                 mp.release();
-                mScroller.startScroll(0,0,0,2000,280000);
+              //  mScroller.startScroll(0,0,0,2000,280000);
                 position=(position+1)%mySongs.size();
                 uri= Uri.parse(mySongs.get(position).toString());
                 mp= MediaPlayer.create(getApplicationContext(),uri);
@@ -379,7 +362,7 @@ timer.cancel();
                     tex=tex.replace("MTrk","˜");
                     StringTokenizer tokens = new StringTokenizer(tex, "˜");
                     tex= tokens.nextToken().toString();
-                    tex=tex.toString().replace("/","\n").replace("\\","\n\n").replace("�p�","").replace("�P�","")
+                    tex=tex.toString().replace("/","\n").replace("�p�","").replace("�P�","")
                             .replace("�`�","").replace("�X�","").replace("x�","").replace("�@�","").replace("�h�","")
                             .replace("�$�","").replace("�J�","").replace("�4�","").replace("�0�","").replace("�(�","").replace("�|�","")
                             .replace("�l�","").replace("�t�","").replace("�D�","").replace("�L�","").replace("�d�","").replace("�j�","")
@@ -394,7 +377,21 @@ timer.cancel();
 
 
 
-                    mlyrics.setText(tex);
+
+//                    handlerplay.post( new Runnable(){
+//                        private int n = 0;
+//
+//                        public void run() {
+//                        phraseplay = tex.split("\\\\");
+//                            mlyrics.setText(phraseplay[n]);
+//                            n++;
+//                            if( n < phraseplay.length)
+//                            {
+//                                handlerplay.postDelayed(this, 5000);
+//                            }
+//
+//                        }
+ //                   });
                 }
                 else
                 {
@@ -406,7 +403,7 @@ timer.cancel();
             case R.id.btnprev:
                 mp.stop();
                 mp.release();
-                mScroller.startScroll(0,0,0,2000,280000);
+              //  mScroller.startScroll(0,0,0,2000,280000);
                 position=(position-1<0)?mySongs.size()-1: position-1;
                 if(position-1<0)
                 {
@@ -440,7 +437,7 @@ timer.cancel();
                     tex=tex.replace("MTrk","˜");
                     StringTokenizer tokens = new StringTokenizer(tex, "˜");
                     tex= tokens.nextToken().toString();
-                    tex=tex.toString().replace("/","\n").replace("\\","\n\n").replace("�p�","").replace("�P�","")
+                    tex=tex.toString().replace("/","\n").replace("�p�","").replace("�P�","")
                             .replace("�`�","").replace("�X�","").replace("x�","").replace("�@�","").replace("�h�","")
                             .replace("�$�","").replace("�J�","").replace("�4�","").replace("�0�","").replace("�(�","").replace("�|�","")
                             .replace("�l�","").replace("�t�","").replace("�D�","").replace("�L�","").replace("�d�","").replace("�j�","")
@@ -455,7 +452,21 @@ timer.cancel();
 
 
 
-                    mlyrics.setText(tex);
+
+//                    handlerplay.post( new Runnable(){
+//                        private int o = 0;
+//
+//                        public void run() {
+//                            phraseplay = tex.split("\\\\");
+//                            mlyrics.setText(phraseplay[o]);
+//                            o++;
+//                            if( o < phraseplay.length)
+//                            {
+//                                handlerplay.postDelayed(this, 5000);
+//                            }
+//
+//                        }
+//                    });
                 }
                 else
                 {

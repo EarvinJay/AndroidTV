@@ -43,7 +43,7 @@ public class AcceptReserveActivity extends AppCompatActivity {
     ArrayList<String> mAReservation= new  ArrayList<>();
     ArrayList<String> mDUrl= new  ArrayList<>();
     ArrayList<String> mSongs= new  ArrayList<>();
-    ArrayList<String> mTime= new  ArrayList<>();
+    ArrayList<String> mLyrics= new  ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
     ListView mlvAreserve;
     String ktvemail,roomname,numberofhours, playlistkey,username;
@@ -100,8 +100,10 @@ public class AcceptReserveActivity extends AppCompatActivity {
                 pgbar.setVisibility(ProgressBar.GONE);
                 String sname=dataSnapshot.child("songname").getValue(String.class);
                 String durl=dataSnapshot.child("songurl").getValue(String.class);
+                String lurl=dataSnapshot.child("LyricsUrl").getValue(String.class);
                 mSongs.add(sname);
                 mDUrl.add(durl);
+                mLyrics.add(lurl);
                 arrayAdapter.notifyDataSetChanged();
 
             }
@@ -138,6 +140,11 @@ public class AcceptReserveActivity extends AppCompatActivity {
                 for(int i=0;i<mDUrl.size();i++)
                 {
                     new DownloadFileFromUrl().execute(mDUrl.get(i).toString());
+                }
+
+                for(int l=0;l<mLyrics.size();l++)
+                {
+                    new DownloadFileFromUrl().execute(mLyrics.get(l).toString());
                 }
 
                 Handler handler = new Handler();
@@ -210,7 +217,7 @@ public class AcceptReserveActivity extends AppCompatActivity {
 
                     System.out.println("Data::" + f_url[i]);
                     // Output stream to write file
-                    OutputStream output = new FileOutputStream(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename.replace("admin%2F","").replace("%20"," ").replace("%","")));
+                    OutputStream output = new FileOutputStream(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename.replace("admin%2F","").replace("%20"," ").replace("%","").replace("LYRICSFILE2F","")));
 
                     byte data[] = new byte[1024];
 

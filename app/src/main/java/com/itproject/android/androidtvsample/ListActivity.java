@@ -34,7 +34,7 @@ public class ListActivity extends AppCompatActivity {
     File file;
     int size,posi;
     View item;
-
+    ArrayAdapter<String> adp;
     int pos=0;
 
     public List<String> myList;
@@ -78,7 +78,7 @@ public class ListActivity extends AppCompatActivity {
 
 
 
-        ArrayAdapter<String> adp=new ArrayAdapter<String>(getApplicationContext(),R.layout.list_item,R.id.txtlistitem,items);
+         adp=new ArrayAdapter<String>(getApplicationContext(),R.layout.list_item,R.id.txtlistitem,items);
         mlvsongs.setAdapter(adp);
 
         Handler handler = new Handler();
@@ -100,7 +100,7 @@ public class ListActivity extends AppCompatActivity {
                 if(m.equals("DOWN"))
                 {
                     try {
-
+adp.notifyDataSetChanged();
                         posi = posi + 1;
                         item = mlvsongs.getChildAt(posi);
                         ((TextView) item.findViewById(R.id.txtlistitem)).setTextColor(Color.RED);
@@ -119,7 +119,7 @@ public class ListActivity extends AppCompatActivity {
                 }
                 else if(m.equals("UP"))
                 {
-
+                    adp.notifyDataSetChanged();
                     try {
 
                         item = mlvsongs.getChildAt(posi--);
